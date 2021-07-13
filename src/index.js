@@ -15,7 +15,7 @@ function checksExistsUserAccount(request, response, next) {
   const user = users.find((user) => user.username === username);
 
   if (!user) {
-    return response.status(404);
+    return response.status(404).json({ error: "User not found" });
   }
 
   request.user = user;
@@ -39,19 +39,19 @@ function checksTodoExists(request, response, next) {
   const { id } = request.params;
 
   if (!validate(id)) {
-    return response.status(400);
+    return response.status(400).json({ error: "ID is not valid" });
   }
 
   const user = users.find((user) => user.username === username);
 
   if (!user) {
-    return response.status(404);
+    return response.status(404).json({ error: "User not found" });
   }
 
   const todo = user.todos.find((todo) => todo.id === id);
 
   if (!todo) {
-    return response.status(404);
+    return response.status(404).json({ error: "Todo list not found" });
   }
 
   request.todo = todo;
@@ -65,7 +65,7 @@ function findUserById(request, response, next) {
   const user = users.find((user) => user.id === id);
 
   if (!user) {
-    return response.status(404);
+    return response.status(404).json({ error: "User not found" });
   }
 
   request.user = user;
